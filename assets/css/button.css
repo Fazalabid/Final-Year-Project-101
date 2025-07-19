@@ -1,0 +1,146 @@
+@import url("colors.css");
+
+/* shopping button */
+.btn-shopping-cart {
+  padding: 6px 10px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 70px;
+  margin-right: -100px;
+  z-index: 1000;
+}
+
+/* login btn */
+.header.btn-login,
+.btn-Book-table,
+.header .btn-login,
+.btn-Book-table:focus {
+  color: var(--contrast-color);
+  position: relative;
+  background: var(--accent-color);
+  font-size: 14px;
+  padding: 8px 26px;
+  margin: 0;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.header .btn-login,
+.header .btn-Book-table:hover,
+.header.btn-login,
+.btn-Book-table:focus:hover {
+  color: var(--contrast-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
+.header .btn-login,
+.btn-Book-table {
+  order: 2;
+  margin: 0 15px 0 0;
+  margin-right: 0px;
+  padding: 6px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+}
+
+/* Pulsating Play Button
+    ------------------------------*/
+
+.pulsating-play-btn {
+  width: 94px;
+  height: 94px;
+  background: radial-gradient(
+    var(--accent-color) 50%,
+    color-mix(in srgb, var(--accent-color), transparent 75%) 52%
+  );
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.pulsating-play-btn:before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  animation-delay: 0s;
+  animation: pulsate-play-btn 2s;
+  animation-direction: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps;
+  opacity: 1;
+  border-radius: 50%;
+  border: 5px solid color-mix(in srgb, var(--accent-color), transparent 30%);
+  top: -15%;
+  left: -15%;
+  background: rgba(198, 16, 0, 0);
+}
+
+.pulsating-play-btn:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-40%) translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #fff;
+  z-index: 100;
+  transition: all 400ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.pulsating-play-btn:hover:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-40%) translateY(-50%);
+  width: 0;
+  height: 0;
+  border: none;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 15px solid #fff;
+  z-index: 200;
+  animation: none;
+  border-radius: 0;
+}
+
+.pulsating-play-btn:hover:after {
+  border-left: 15px solid var(--accent-color);
+  transform: scale(20);
+}
+
+@keyframes pulsate-play-btn {
+  0% {
+    transform: scale(0.6, 0.6);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 0;
+  }
+}
+
+#profileIcon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  display: flex;
+  float: right;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  color: var(--contrast-color);
+  font-size: 16px;
+}

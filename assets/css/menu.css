@@ -1,0 +1,97 @@
+@import url("colors.css");
+
+/*--------------------------------------------------------------
+# Menu Section
+--------------------------------------------------------------*/
+.menu .nav-tabs {
+  border: 0;
+}
+
+.menu .nav-link {
+  background-color: var(--background-color);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  margin: 0 15px;
+  padding: 10px 5px;
+  transition: 0.3s;
+  border-radius: 0;
+  cursor: pointer;
+  height: 100%;
+  border: 0;
+  border-bottom: 2px solid
+    color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.menu .nav-link i {
+  padding-right: 15px;
+  font-size: 48px;
+}
+
+.menu .nav-link h4 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  font-family: var(--default-font);
+}
+
+.menu .nav-link:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.menu .nav-link.active {
+  background-color: var(--background-color);
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.menu .tab-content .tab-header {
+  padding: 30px 0;
+}
+
+.menu .tab-content .tab-header p {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  margin-bottom: 0;
+}
+
+.menu .tab-content .tab-header h3 {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.menu .tab-content .menu-item {
+  text-align-last: center;
+}
+
+.menu .tab-content .menu-item .menu-img {
+  padding: 0 60px;
+  height: 40%;
+  margin-bottom: 15px;
+}
+
+.menu .tab-content .menu-item h4 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  font-family: var(--default-font);
+}
+
+.menu .tab-content .menu-item .ingredients {
+  font-family: var(--nav-font);
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  margin-bottom: 5px;
+}
+
+.menu .tab-content .menu-item .price {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+.out-of-stock-card {
+  opacity: 0.6;
+  pointer-events: none;
+  /* border: 1px solid #3599dc; red border */
+  position: relative;
+}

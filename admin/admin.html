@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-styles.css" />
+    <link rel="stylesheet" href="../assets/css/button.css" />
+    <link
+      href="../assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Toastify CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  </head>
+  <body>
+    <!-- <header class="admin-header"> -->
+      <!-- <h1>Restaurant Admin Panel</h1> -->
+    <!-- </header> -->
+
+    <div class="admin-container">
+      <!-- <nav class="fixed-dashboard-nav"> -->
+        
+        <!-- Toggle Button -->
+<button id="toggleSidebar" class="sidebar-toggle">&#9776;</button>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <ul>
+    <li><a href="#dashboard" onclick="showSection('dashboard', this)">Dashboard</a></li>
+    <li><a href="#manage-users" onclick="showSection('manage-users', this)">Manage Users</a></li>
+    <li><a href="#menu" onclick="showSection('menu', this)">Manage Menu</a></li>
+    <li><a href="#tables" onclick="showSection('tables', this)">Manage Tables</a></li>
+    <li><a href="#reservations" onclick="showSection('reservations', this)">Bookings</a></li>
+    <li><a href="#orders" onclick="showSection('orders', this)">Orders</a></li>
+    <li><a href="#feedBacks" onclick="showSection('feedBacks', this); loadTables();">Feedbacks</a></li>
+    <li><a href="#serviceRequests" onclick="showSection('serviceRequests', this)">Service Requests</a></li>
+  </ul>
+</aside>
+
+        
+    <!-- </nav> -->
+      <main class="content">
+       
+        <section id="dashboard" class="section active">
+          <button
+          class="btn-Book-table"
+          id="backToHomeButton"
+        >
+          <a href="../index.html" style="color: white"
+            >back to Home Page</a
+          >
+        </button>
+          <h2>Dashboard</h2>
+          <div class="dashboard-cards">
+            <div class="dashboard-card">
+              <h4>Users</h4>
+              <span id="count-users">0</span>
+            </div>
+            <div class="dashboard-card">
+              <h4>Orders</h4>
+              <span id="count-orders">0</span>
+            </div>
+            <div class="dashboard-card">
+              <h4>Bookings</h4>
+              <span id="count-bookings">0</span>
+            </div>
+            <div class="dashboard-card">
+              <h4>Menu Items</h4>
+              <span id="count-menu">0</span>
+            </div>
+            <div class="dashboard-card">
+              <h4>Tables</h4>
+              <span id="count-tables">0</span>
+            </div>
+            <div class="dashboard-card">
+              <h4>Feedbacks</h4>
+              <span id="count-feedbacks">0</span>
+            </div>
+            <div class="dashboard-card">
+              <h4>Service Requests</h4>
+              <span id="count-requests">0</span>
+            </div>
+          </div>
+          
+        </section>
+        
+
+        <section id="menu" class="section">
+          <h2>Manage Menu</h2>
+          <button class="add-btn" onclick="openMenuModal()">➕ Add New Item</button>
+        
+          <table class="table table-light table-striped table-bordered" id="menuTable">
+
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price (Rs)</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="menuTableBody"></tbody>
+          </table>
+        </section>
+        
+        <!-- Modal for Add/Edit Menu Item -->
+        <div id="menu-modal" class="modal-bg">
+          <div class="modal-box">
+            <h2 id="menu-modal-title">Add / Edit Menu Item</h2>
+            <input type="text" id="menu-name" placeholder="Item Name" />
+            <input type="text" id="menu-description" placeholder="Description" />
+            <input type="number" id="menu-price" placeholder="Price" />
+            <select id="menu-category" required>
+              <option value="">-- Select Category --</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch">Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Dessert">Dessert</option>
+              <option value="Tea">Tea</option>
+            </select>
+            
+            <input type="number" id="menu-stock" placeholder="Stock Quantity" />
+            <input type="file" id="menu-image" accept="image/png" />
+            <input type="hidden" id="menu-id" />
+            <input type="hidden" id="menu-existing-image" />
+
+        
+            <div class="modal-buttons">
+              <button class="btn green" onclick="submitMenuItem()">Save</button>
+              <button class="btn red" onclick="closeMenuModal()">Cancel</button>
+            </div>
+          </div>
+        </div>
+        
+        <section id="reservations" class="section">
+          <h2>Reservations/Bookings</h2>
+          <div id="admin-booking-list">
+            <table class="table table-dark table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Guests</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="bookingTableBody">
+                <!-- Rows will be injected here -->
+              </tbody>
+            </table>
+            
+          </div>
+        </section>
+        <div class="modal fade" id="editBookingModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content bg-light rounded-3">
+              <div class="modal-header">
+                <h5 class="modal-title fw-bold">Edit Booking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+        
+              <div class="modal-body">
+                <form id="editBookingForm" class="row g-3">
+                  <input type="hidden" id="editBookingId" />
+        
+                  <div class="col-md-6">
+                    <label for="editDate" class="form-label">Date</label>
+                    <input type="date" id="editDate" class="form-control" required />
+                  </div>
+        
+                  <div class="col-md-6">
+                    <label for="editTime" class="form-label">Time</label>
+                    <input type="time" id="editTime" class="form-control" required />
+                  </div>
+        
+                  <div class="col-md-6">
+                    <label for="editGuests" class="form-label">Guests</label>
+                    <input type="number" id="editGuests" class="form-control" min="1" required />
+                  </div>
+        
+                  <div class="col-md-6">
+                    <label for="editTable" class="form-label">Table Number</label>
+                    <select id="editTable" class="form-select" required>
+                      <!-- Options will be dynamically added -->
+                    </select>
+                  </div>
+        
+                  <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">
+                      💾 Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        <section id="orders" class="section">
+          <h2>Orders</h2>
+          <div id="orderList"></div>
+        </section>
+
+        <!-- MANAGE USERS SECTION -->
+<section id="manage-users" class="section">
+  <h1>Manage Users</h1>
+  <button onclick="openAddUserModal()" class="add-btn">➕ Add New Admin</button>
+
+  <table class="table table-light table-striped table-bordered" id="menuTable">
+
+    <thead>
+      <tr>
+        <th>S.N.</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="userTableBody"></tbody>
+  </table>
+</section>
+
+<!-- Edit User Modal -->
+<!-- <div id="edit-user-modal" class="modal-bg">
+  <div class="modal-box">
+    <h2>Edit User</h2>
+    <input type="text" id="edit-name" placeholder="Full Name" />
+    <input type="text" id="edit-email" placeholder="Email" />
+    <div class="modal-buttons">
+      <button onclick="saveUserChanges()" class="btn green">Save</button>
+      <button onclick="closeUserModal()" class="btn red">Cancel</button>
+    </div>
+  </div>
+</div> -->
+
+
+<div id="add-user-modal" class="modal-bg">
+  <div class="modal-box">
+    <h2>Add New User</h2>
+    <input type="text" id="newUserName" placeholder="Full Name" />
+    <input type="email" id="newUserEmail" placeholder="Email" />
+    <input type="password" id="newUserPassword" placeholder="Password" />
+    <input type="password" id="newUserPasswordConfirm" placeholder="Confirm Password" />
+    <h5>Role:</h5>
+    <select id="newUserRole">
+      <option value="customer">Customer</option>
+      <option value="admin">Admin</option>
+    </select>
+    <div class="modal-buttons">
+      <button onclick="submitAddUser()" class="btn green">Add User</button>
+      <button onclick="closeAddUserModal()" class="btn red">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <!-- Edit User Modal -->
+<div id="edit-user-modal" class="modal-bg">
+  <div class="modal-box">
+    <h2>Edit User</h2>
+    <input type="hidden" id="editUserId" />
+    <input type="text" id="editUserName" placeholder="Full Name" />
+    <input type="text" id="editUserEmail" placeholder="Email" />
+    <div class="modal-buttons">
+      <button onclick="submitUserUpdate()" class="btn green">Save</button>
+      <button onclick="closeEditUserModal()" class="btn red">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<section id="feedBacks" class="section">
+  <div class="container">
+    <h3>Customer Feedback</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-light table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="feedbackList"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="serviceRequests">
+  <div class="container mt-5">
+    <h2 class="mb-4">📋 Service Requests</h2>
+    <div id="service-requests-table" class="table-responsive"></div>
+  </div>
+  
+</section>
+
+<!-- //Tables -->
+<section id="tables" class="section">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Manage Tables</h3>
+      <button class="btn btn-primary" style="color: black;" onclick="openTableModal()">➕ Add Table</button>
+    </div>
+
+    <div id="tablesContainer" class="table-responsive">
+      <table class="table table-bordered table-striped table-light table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Table Number</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableList"></tbody>
+      </table>
+    </div>    
+  </div>
+</section>
+
+<!-- Table Modal -->
+<div id="table-modal" class="custom-modal">
+  <div class="modal-content-dark">
+    <h3 id="table-modal-title">🪑 Add / Edit Table</h3>
+    <input type="hidden" id="table-id" />
+
+    <div class="mb-3">
+      <label for="table-number" class="form-label">Table Number</label>
+      <input type="number" id="table-number" class="form-control" placeholder="Enter table number" />
+    </div>
+
+    <div class="mb-3">
+      <label for="table-capacity" class="form-label">Capacity</label>
+      <input type="number" id="table-capacity" class="form-control" placeholder="Enter seating capacity" />
+    </div>
+
+    <div class="mb-3">
+      <label for="table-status" class="form-label">Status</label>
+      <select id="table-status" class="form-select">
+        <option value="Available">Available</option>
+        <option value="Unavailable">Unavailable</option>
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button onclick="submitTable()" class="btn btn-success">💾 Save</button>
+      <button onclick="closeTableModal()" class="btn btn-secondary">❌ Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- table section end -->
+
+
+
+
+<div id="serviceAlert" class="alert alert-info" style="display:none; position: fixed; top: 20px; right: 20px; z-index: 1000;">
+  🔔 New Service Request Received!
+</div>
+
+
+
+<audio id="request-sound" src="../assets/sounds/ding.mp3" preload="auto"></audio>
+<!-- Toastify JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<!-- Bootstrap Bundle JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="admin-script.js"></script>
+
+
+  </body>
+</html>

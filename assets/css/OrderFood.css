@@ -1,0 +1,217 @@
+@import url("colors.css");
+
+
+/*--------------------------------------------------------------
+# Order food 
+--------------------------------------------------------------*/
+/* Order Food Styles - Same as Book A Table */
+.order-food .reservation-img {
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+}
+#modalItemName {
+  font-size: 50px;
+  color: var(--accent-color);
+}
+.order-food .reservation-form-bg {
+  background: color-mix(in srgb, var(--default-color), transparent 87%);
+}
+
+.order-food .php-email-form {
+  padding: 30px;
+}
+
+
+.order-food .php-email-form input[type="text"],
+.order-food .php-email-form input[type="email"],
+.order-food .php-email-form input[type="number"],
+.order-food .php-email-form input[type="date"],
+.order-food .php-email-form input[type="time"],
+.order-food .php-email-form textarea,
+.order-food .php-email-form select {
+  font-size: 14px;
+  padding: 10px 15px;
+  box-shadow: none;
+  border-radius: 0;
+  color: var(--default-color);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 20%
+  );
+  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.order-food .php-email-form input[type="text"]:focus,
+.order-food .php-email-form input[type="email"]:focus,
+.order-food .php-email-form input[type="number"]:focus,
+.order-food .php-email-form input[type="date"]:focus,
+.order-food .php-email-form input[type="time"]:focus,
+.order-food .php-email-form textarea:focus,
+.order-food .php-email-form select:focus {
+  border-color: var(--accent-color);
+}
+
+.order-food .php-email-form input[type="text"]::placeholder,
+.order-food .php-email-form input[type="email"]::placeholder,
+.order-food .php-email-form input[type="number"]::placeholder,
+.order-food .php-email-form input[type="date"]::placeholder,
+.order-food .php-email-form input[type="time"]::placeholder,
+.order-food .php-email-form textarea::placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.order-food .php-email-form button[type="submit"] {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  border: 0;
+  padding: 14px 60px;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.order-food .php-email-form button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+/* order model */
+.order-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(203, 202, 202, 0.7);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-modal .modal-content {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.order-modal .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 26px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* order-now-btn for menu items */
+.order-now-btn {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  border: 0;
+  padding: 14px 60px;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.order-now-btn:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+
+/*------------CartModal--------------------------------------------------
+/* Modal background (same for both Order and Cart) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Modal content styled like book-a-table form */
+.modal-content {
+  background: color-mix(in srgb, white, transparent 20%);
+  padding: 30px;
+  border-radius: 8px;
+  color: var(--default-color);
+  position: relative; /* Needed to position the close button */
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Form inputs styling */
+.modal-content .form-control {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: var(--default-color);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 20%
+  );
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border-radius: 4px;
+}
+
+/* Focus styles */
+.modal-content .form-control:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+/* Submit Button */
+.modal-content button[type="submit"],
+.modal-content button {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  border: none;
+  padding: 12px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.modal-content button:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+/* Close button */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
+/* Cart item list styling */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 5px;
+}
+

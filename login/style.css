@@ -1,0 +1,165 @@
+@import url(../assets/css/colors.css);
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+  border-radius: 15px;
+  background: color-mix(in srgb, #212529, transparent 97%);
+}
+
+.btn-primary {
+  background-color: #3474c8;
+  border: none;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border: 2px solid #000000;
+  box-shadow: none;
+}
+
+.btn-primary:hover {
+  background-color: #5787c5;
+}
+
+/* Login Section Styles --------------------------------------------------------------*/
+
+#login-heading {
+  font-family: cursive;
+  font-size: 30px;
+  color: var(--accent-color);
+}
+.login-section {
+  padding: 60px 0;
+}
+
+.login-section .container {
+  max-width: 800px;
+  border: 2px solid rgb(243, 238, 238);
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.login-section .reservation-form-bg {
+  background: color-mix(in srgb, var(--default-color), transparent 97%);
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-section .php-email-form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-section .input-group {
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.login-section .input-group input {
+  font-size: 14px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-shadow: none;
+  border-radius: 4px;
+  color: var(--default-color);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 20%
+  );
+  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.login-section .input-group .input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--default-color);
+}
+
+.login-section .php-email-form input[type="email"]:focus,
+.login-section .php-email-form input[type="password"]:focus {
+  border-color: var(--accent-color);
+}
+
+.login-section .php-email-form input[type="email"]::placeholder,
+.login-section .php-email-form input[type="password"]::placeholder {
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.login-section .remember-me {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.login-section .remember-me input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.login-section .forgot-password {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.login-section .forgot-password a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.login-section .forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-section .php-email-form button[type="submit"] {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  border: 0;
+  padding: 14px 60px;
+  transition: 0.4s;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.login-section .php-email-form button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+.login-section .order-success-message {
+  margin-top: 10px;
+  color: green;
+  font-size: 16px;
+  display: none;
+}
+
+/* .show-password {
+  margin-top: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+.show-password input[type="checkbox"] {
+  margin-right: 6px;
+}
+.password-group {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+} */

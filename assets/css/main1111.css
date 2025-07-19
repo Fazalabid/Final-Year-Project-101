@@ -1,0 +1,205 @@
+@import url("index.css");
+
+/* Fonts */
+:root {
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Amatic SC", sans-serif;
+  --nav-font: "Inter", sans-serif;
+}
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+body {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  font-family: var(--default-font);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: color-mix(in srgb, var(--accent-color), transparent 25%);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+h1 em {
+  color: var(--accent-color);
+}
+
+/* PHP Email Form Messages */
+.php-email-form .error-message {
+  display: none;
+  background: #df1529;
+  color: #ffffff;
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.php-email-form .sent-message {
+  display: none;
+  color: #ffffff;
+  background: #059652;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.php-email-form .loading {
+  display: none;
+  background: var(--surface-color);
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+}
+
+.php-email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid var(--accent-color);
+  border-top-color: var(--surface-color);
+  animation: php-email-form-loading 1s linear infinite;
+}
+
+/*--------------------------------------------------------------
+# Global Header
+--------------------------------------------------------------*/
+.header {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 20px 0;
+  transition: all 0.5s;
+  z-index: 997;
+}
+
+.header .logo {
+  line-height: 1;
+}
+
+.header .logo img {
+  max-height: 50px;
+  margin-right: 0px;
+}
+
+.header .logo h1 {
+  font-size: 30px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--heading-color);
+  font-family: var(--default-font);
+}
+
+.header .logo span {
+  color: var(--accent-color);
+  font-size: 36px;
+}
+
+.scrolled .header {
+  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+}
+
+/*--------------------------------------------------------------
+# Responsive Design (Media Queries)
+--------------------------------------------------------------*/
+
+@media (max-width: 1200px) {
+  .hero h1 {
+    font-size: 48px;
+  }
+  .hero p {
+    font-size: 18px;
+  }
+  .section-title p {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 992px) {
+  .header .logo h1 {
+    font-size: 24px;
+  }
+  .hero {
+    padding: 40px 20px;
+    text-align: center;
+    flex-direction: column;
+  }
+  .hero .btn-watch-video {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  .why-us .icon-box {
+    padding: 30px 20px;
+  }
+  .profile-panel {
+    width: 300px;
+  }
+  .history-modal-box {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 36px;
+  }
+  .hero p {
+    font-size: 16px;
+  }
+  .section-title p {
+    font-size: 30px;
+  }
+  .why-us .why-box h3 {
+    font-size: 28px;
+  }
+  .why-us .icon-box h4 {
+    font-size: 18px;
+  }
+  .profile-icon {
+    font-size: 24px;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    padding: 15px 10px;
+  }
+  .page-title h1 {
+    font-size: 28px;
+  }
+  .section-title p {
+    font-size: 24px;
+  }
+  .hero .btn-get-started {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+  .profile-panel {
+    width: 100%;
+  }
+  .modal-body p {
+    font-size: 0.85rem;
+  }
+}

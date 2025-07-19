@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="feedback-section section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Feedback</h2>
+          <p>We value your thoughts</p>
+        </div>
+
+        <form class="php-email-form" id="feedbackForm">
+          <div class="form-group">
+            <label for="feedbackText">Your Feedback</label>
+            <textarea
+              id="feedbackText"
+              name="feedback"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group star-rating">
+            <label>Rating:</label>
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Submit Feedback</button>
+          </div>
+
+          <div class="sent-message">
+            Your feedback has been submitted. Thank you!
+          </div>
+          <div class="error-message">Failed to send feedback.</div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

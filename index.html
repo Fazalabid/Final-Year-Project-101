@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BooknBite</title>
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Amatic+SC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!--  CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet" />
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" href="assets/css/button.css" />
+  </head>
+
+  <body class="index-page">
+    <header id="header" class="header d-flex align-items-center sticky-top">
+      <div
+        class="container position-relative d-flex align-items-center justify-content-between"
+      >
+        <a
+          href="index.html"
+          class="logo d-flex align-items-center me-auto me-xl-0"
+        >
+          <img src="assets/img/logo.png" alt="Logo" />
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li>
+              <a href="#hero" class="active">Home<br /></a>
+            </li>
+            <li><a href="#menu">Menu</a></li>
+
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="aboutUs.html">About</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+        <a class="btn-Book-table" href="booking.html">Book a Table</a>
+
+        <button
+          id="add-to-cart-btn"
+          onclick="toggleCart()"
+          class="btn-Book-table"
+        >
+          🛒<span id="cartItemCount">0</span>
+        </button>
+        <a class="btn-Book-table" id="logInButton" href="Login/login.html">
+          <i class="bi bi-person-circle me-1"></i> Login
+        </a>
+        <button
+          class="btn p-1 align-items-center justify-content-center profile-icon-btn"
+          title="Profile"
+          id="profileIcon"
+          onclick="openProfilePanel()"
+          style="
+            display: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+          "
+        >
+          <img
+            id="profilePic"
+            src=""
+            class="rounded-circle"
+            width="55"
+            height="55"
+            alt="Profile"
+            style="object-fit: cover"
+            onerror="this.onerror=null;this.src='assets/img/default-avatar.jpg';"
+          />
+        </button>
+        <button
+          class="btn-Book-table"
+          id="adminBtnWrapper"
+          onclick=""
+          style="display: none"
+        >
+          <a href="admin/admin.html" style="color: white"
+            >Go to Admin Dashboard</a
+          >
+          <i class="bi bi-gear"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Hero Section -->
+      <section id="hero" class="hero section light-background">
+        <div class="container">
+          <div
+            class="row gy-4 justify-content-center justify-content-lg-between"
+          >
+            <div
+              class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center"
+            >
+              <h1 data-aos="fade-up">
+                Enjoy Your <em>Healthy</em><br />Delicious Food
+              </h1>
+              <p data-aos="fade-up" data-aos-delay="80">
+                From elegant reservations to gourmet orders, indulge in premium
+                dining at your fingertips. Exquisite taste, effortless service.
+              </p>
+              <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                <a href="booking.html" class="btn-get-started">Booka a Table</a>
+                <a
+                  href="assets//video.mp4"
+                  class="glightbox btn-watch-video d-flex align-items-center"
+                  ><i class="bi bi-play-circle"></i><span>Watch Video</span></a
+                >
+              </div>
+            </div>
+            <div
+              class="col-lg-5 order-1 order-lg-2 hero-img"
+              data-aos="zoom-out"
+            >
+              <img
+                src="assets/img/menu/friedChicken.png"
+                class="img-fluid animated"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /Hero Section -->
+
+      <!-- Cart Modal -->
+      <div id="cartModal" class="modal" style="display: none">
+        <div
+          class="modal-content book-a-table php-email-form"
+          style="max-width: 600px; margin: auto"
+        >
+          <span
+            class="close"
+            onclick="toggleCart()"
+            style="float: right; font-size: 28px; cursor: pointer"
+            >&times;</span
+          >
+          <h2>Your Cart (<span id="cartItemCountIn">0</span> items)</h2>
+
+          <div
+            id="cartItemsList"
+            class="cart-items"
+            style="margin-bottom: 20px"
+          ></div>
+
+          <h4>Total: Rs<span id="totalAmount">0.00</span></h4>
+          <button onclick="checkout()">Checkout</button>
+        </div>
+      </div>
+
+      <!-- cart modal End -->
+
+      <!-- Menu Section -->
+      <section id="menu" class="menu section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Our Menu</h2>
+          <p>
+            <span>Check Out Our</span>
+            <span class="description-title">Menu</span>
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container">
+          <ul
+            class="nav nav-tabs d-flex justify-content-center"
+            data-aos="fade-up"
+            data-aos-delay="100"
+            id="menu-tabs"
+          >
+            <!-- Tabs will be generated dynamically -->
+          </ul>
+
+          <div
+            class="tab-content"
+            data-aos="fade-up"
+            data-aos-delay="200"
+            id="menu-tab-content"
+          >
+            <!-- Tab content will be generated dynamically -->
+          </div>
+        </div>
+      </section>
+      <!-- /Menu Section -->
+
+      <!-- Why Us Section -->
+      <section id="why-us" class="why-us section light-background">
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="why-box">
+                <h3>Why Choose BooknBite</h3>
+                <p>
+                  Choose BooknBite for a seamless all-in-one dining experience
+                  that combines fast online ordering, easy table reservations,
+                  smart inventory management, and a user-friendly interface —
+                  all designed to make restaurant life simpler and more
+                  delicious.
+                </p>
+                <div class="text-center">
+                  <a href="aboutUs.html" class="more-btn"
+                    ><span>Learn More</span> <i class="bi bi-chevron-right"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <!-- End Why Box -->
+
+            <div class="col-lg-8 d-flex align-items-stretch">
+              <div class="row gy-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-xl-4">
+                  <div
+                    class="icon-box d-flex flex-column justify-content-center align-items-center"
+                  >
+                    <i class="bi bi-clipboard-data"></i>
+                    <h4>Super Easy to Use</h4>
+                    <p>No more stress, just click and go!</p>
+                  </div>
+                </div>
+                <!-- End Icon Box -->
+
+                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="300">
+                  <div
+                    class="icon-box d-flex flex-column justify-content-center align-items-center"
+                  >
+                    <i class="bi bi-gem"></i>
+                    <h4>Effortless Booking & Ordering</h4>
+                    <p>Save time, elevate service</p>
+                  </div>
+                </div>
+                <!-- End Icon Box -->
+
+                <div class="col-xl-4" data-aos="fade-up" data-aos-delay="400">
+                  <div
+                    class="icon-box d-flex flex-column justify-content-center align-items-center"
+                  >
+                    <i class="bi bi-inboxes"></i>
+                    <h4>Complete Digital Experience</h4>
+                    <p>One solution for all your restaurant needs</p>
+                  </div>
+                </div>
+                <!-- End Icon Box -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- / end Why Us Section -->
+
+      <!-- Order Modal -->
+      <div id="orderModal" class="order-modal" style="display: none">
+        <div class="modal-content reservation-form-bg">
+          <span class="close-btn" onclick="closeOrderModal()">&times;</span>
+          <form class="php-email-form" onsubmit="submitOrder(event)">
+            <h3 id="modalItemName">Item Name</h3>
+            <p id="modalItemDesc">Item description will go here.</p>
+
+            <div class="row gy-4">
+              <div class="col-lg-6 col-md-6">
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Your Name"
+                  required
+                />
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <input
+                  type="text"
+                  name="phone"
+                  class="form-control"
+                  placeholder="Your Phone"
+                  required
+                />
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <input
+                  type="text"
+                  name="address"
+                  class="form-control"
+                  placeholder="Delivery Address"
+                  required
+                />
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <input
+                  type="number"
+                  name="address"
+                  class="form-control"
+                  placeholder="Quantity"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group mt-3">
+              <textarea
+                class="form-control"
+                name="message"
+                rows="4"
+                placeholder="Any instructions..."
+              ></textarea>
+            </div>
+
+            <div class="text-center mt-3">
+              <button type="submit">Place Order</button>
+              <div
+                class="order-success-message mt-2"
+                style="display: none; color: green; font-weight: bold"
+              >
+                ✅ Your order has been placed!
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- End Order Modal -->
+
+      <!--  Contact Section -->
+      <section id="contact" class="contact section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Contact</h2>
+          <p>
+            <span>Need Help?</span>
+            <span class="description-title">Contact Us</span>
+          </p>
+        </div>
+        <!-- End Section Title -->
+        <!-- -->
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="mb-5">
+            <iframe
+              style="width: 100%; height: 400px"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.8350128445463!2d73.06087207570201!3d33.713217873286645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38dfbfa2b24610f1%3A0x5f54fce13039bdb7!2sFortune%20Plaza!5e0!3m2!1sen!2s!4v1744648481453!5m2!1sen!2s"
+              frameborder="1"
+              allowfullscreen=""
+            ></iframe>
+          </div>
+          <!-- End Google Maps -->
+
+          <!-- Info Item -->
+          <div class="row gy-4">
+            <div class="col-md-6">
+              <div
+                class="info-item d-flex align-items-center"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <i class="icon bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Address</h3>
+                  <p>
+                    Fortune Plaza, 2 Jinnah Avenue, Block H G 7/2, Blue Area,
+                    Islamabad​
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- End Info Item -->
+
+            <div class="col-md-6">
+              <div
+                class="info-item d-flex align-items-center"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
+                <i class="icon bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Call Us</h3>
+                  <p>03301234567​</p>
+                </div>
+              </div>
+            </div>
+            <!-- End Info Item -->
+
+            <div class="col-md-6">
+              <div
+                class="info-item d-flex align-items-center"
+                data-aos="fade-up"
+                data-aos-delay="400"
+              >
+                <i class="icon bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email Us</h3>
+                  <p>booknbite@gmail.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Info Item -->
+
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up">
+            <p>
+              <span>Send Us Feedback</span>
+            </p>
+            <p><span>We value your feedback</span></p>
+          </div>
+          <!-- End Section Title -->
+          <form class="php-email-form" id="feedbackForm">
+            <div class="row gy-4">
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  name="name"
+                  id="nameFeedback"
+                  class="form-control"
+                  placeholder="Your Name"
+                  required=""
+                />
+              </div>
+
+              <div class="col-md-6">
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                />
+              </div>
+
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  id="subject"
+                  class="form-control"
+                  name="subject"
+                  placeholder="Subject (New Dish, Complaint, Praise etc)"
+                  required
+                />
+              </div>
+
+              <div class="col-md-12">
+                <textarea
+                  class="form-control"
+                  id="message"
+                  name="message"
+                  rows="6"
+                  placeholder="Feedback"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="col-md-12 text-center">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">
+                  Your message has been sent. Thank you!
+                </div>
+
+                <button type="submit">Send Message</button>
+              </div>
+            </div>
+          </form>
+          <!-- End Contact Form -->
+        </div>
+      </section>
+      <!-- /Contact Section -->
+    </main>
+
+    <footer id="footer" class="footer dark-background">
+      <div class="container">
+        <div class="row gy-3">
+          <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-geo-alt icon"></i>
+            <div class="address">
+              <h4>Address</h4>
+              <p>
+                Fortune Plaza, 2 Jinnah Avenue, Block H G 7/2, Blue Area,
+                Islamabad​
+              </p>
+              <p></p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-telephone icon"></i>
+            <div>
+              <h4>Contact</h4>
+              <p>
+                <strong>Phone:</strong> <span>03301234567​</span><br />
+                <strong>Email:</strong> <span>booknbite@gmail.com​</span><br />
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex">
+            <i class="bi bi-clock icon"></i>
+            <div>
+              <h4>Opening Hours</h4>
+              <p>
+                <strong>Mon-Sat:</strong> <span>06AM - 10PM</span><br />
+                <strong>Sunday</strong>: <span>Closed</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container copyright text-center mt-4">
+        <p>
+          © <span>Copyright</span>
+          <strong class="px-1 sitename">BooknBite</strong>
+          <span>All Rights Reserved</span>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Optional Profile Button (You can move it inside navbar if needed)
+    <button class="btn btn-dark profile-icon-btn" onclick="openProfilePanel()">
+      <i class="bi bi-person-circle"></i>
+    </button> -->
+
+    <!-- Overlay -->
+    <div
+      id="profileOverlay"
+      class="profile-overlay"
+      onclick="closeProfilePanel()"
+    ></div>
+
+    <!-- Profile Slide Panel -->
+    <div id="profilePanel" class="profile-panel">
+      <div class="profile-header">
+        <h4>Your Profile</h4>
+        <button class="btn-close" onclick="closeProfilePanel()"></button>
+      </div>
+      <!-- Profile Picture with Edit Icon -->
+      <div
+        class="profile-pic-wrapper d-flex flex-column align-items-center position-relative"
+      >
+        <img
+          id="userProfilePic"
+          src=""
+          class="rounded-circle mb-3"
+          width="120"
+          alt="Profile Picture"
+          style="object-fit: cover"
+          onerror="this.onerror=null;this.src='assets/img/default-avatar.jpg';"
+        />
+        <button
+          class="btn btn-light btn-sm edit-icon"
+          id="editProfilePicBtn"
+          style="bottom: 10px; right: 10px; border-radius: 50%"
+          onclick="openPicUploadModal()"
+          title="Edit"
+        >
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <!-- Upload Modal -->
+      <div
+        class="modal fade"
+        id="profilePicModal"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title">Upload New Profile Picture</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                ❌
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="uploadPicForm">
+                <input
+                  type="file"
+                  id="picInput"
+                  name="profilePic"
+                  class="form-control"
+                  accept="image/*"
+                  required
+                />
+                <button type="submit" class="btn btn-primary w-100 mt-3">
+                  Upload
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-content">
+        <p><strong>Name:</strong> <span id="name"></span></p>
+        <p><strong>Email:</strong> <span id="userEmail"></span></p>
+        <p><strong>Role:</strong> <span id="userRole"></span></p>
+
+        <div class="profile-actions mt-4">
+          <button class="btn btn-secondary" onclick="editProfile()">
+            Edit Profile
+          </button>
+          <button class="btn btn-secondary" onclick="changePassword()">
+            Change Password
+          </button>
+        </div>
+        <div class="profile-actions mt-2">
+          <button class="btn btn-danger" onclick="logoutUser()">Log Out</button>
+        </div>
+
+        <div class="profile-actions mt-4">
+          <button class="btn btn-info" onclick="openHistoryModal()">
+            View Orders
+          </button>
+          <button class="btn btn-info" onclick="openBookingModal()">
+            View Bookings
+          </button>
+        </div>
+        <div class="profile-actions mt-4">
+          <button
+            id="service-request-btn"
+            class="btn btn-warning"
+            data-bs-toggle="modal"
+            data-bs-target="#serviceRequestModal"
+          >
+            📞 Request Service
+          </button>
+        </div>
+        <button
+          class="btn btn-outline-primary mt-3"
+          data-bs-toggle="modal"
+          data-bs-target="#serviceRequestHistoryModal"
+          onclick="loadMyServiceRequests()"
+        >
+          View My Service Requests
+        </button>
+      </div>
+    </div>
+    <!-- End Profile Slide Panel -->
+    <!-- Service Request Modal -->
+    <div class="modal fade" id="serviceRequestModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title">Request Service</h1>
+            <button
+              type="button"
+              aria-label="Close"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            >
+              ❌
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="service-request-form">
+              <div class="mb-3">
+                <label for="requestType" class="form-label"
+                  >Select Request</label
+                >
+                <select class="form-select" id="requestType" required>
+                  <option value="" disabled selected>Select an option</option>
+                  <option value="Water">Water</option>
+                  <option value="Napkin">Napkin</option>
+                  <option value="Bill">Bill</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="note" class="form-label"
+                  >Additional Note (optional)</label
+                >
+                <textarea
+                  class="form-control"
+                  id="note"
+                  rows="2"
+                  placeholder="e.g., 2 glasses of cold water"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Submit Request
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Service Request Modal -->
+
+    <!-- Service Request History Modal -->
+    <div
+      class="modal fade"
+      id="serviceRequestHistoryModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title">Your Service Requests</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              ❌
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="my-service-requests-container">
+              <p>Loading your service requests...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="modal-bg" onclick="outsideClickClose(event)">
+      <div class="modal-box history-modal-box">
+        <div class="modal-header">
+          <h4>Your Orders</h4>
+          <button onclick="closeHistoryModal()" class="btn-close">
+            &times;
+          </button>
+        </div>
+        <div id="history-content" class="modal-body">
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- End History Modal -->
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="modal-bg" onclick="outsideClickClose(event)">
+      <div class="modal-box history-modal-box">
+        <div class="modal-header">
+          <h4>Your Bookings</h4>
+          <button onclick="closeBookingModal()" class="btn-close">
+            &times;
+          </button>
+        </div>
+        <div id="booking-content" class="modal-body">
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+    <!-- End Booking Modal -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Vendor JS Files -->
+    <!-- <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+    <!-- <script src="assets/js/booking.js"></script> -->
+    <script src="assets/js/menuSection.js"></script>
+    <script src="assets/js/feedback.js"></script>
+    <script src="assets/js//profile.js"></script>
+
+    <!-- Toastify JS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("token");
+        const userId = getUserIdFromToken(token);
+
+        if (userId) {
+          fetch(`http://localhost:5000/api/auth/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((res) => res.json())
+            .then((user) => {
+              document.getElementById("name").textContent =
+                user.data.users.name;
+              document.getElementById("userEmail").textContent =
+                user.data.users.email;
+              document.getElementById("userRole").textContent =
+                user.data.users.role;
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("Failed to load profile.");
+            });
+        }
+      });
+
+      function openProfilePanel() {
+        document.getElementById("profilePanel").classList.add("active");
+        document.getElementById("profileOverlay").classList.add("active");
+      }
+
+      function closeProfilePanel() {
+        document.getElementById("profilePanel").classList.remove("active");
+        document.getElementById("profileOverlay").classList.remove("active");
+      }
+
+      function editProfile() {
+        window.location.href = "profilePage.html"; // Only updates name/email
+      }
+
+      function changePassword() {
+        window.location.href = "change-password.html"; // Handles password
+      }
+
+      function logoutUser() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("cart"); // Clear cart for new login
+        window.location.href = "../index.html";
+      }
+
+      function getUserIdFromToken(token) {
+        if (!token) return null;
+        try {
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          return payload.id || payload._id || payload.userId;
+        } catch (error) {
+          console.error("Invalid token", error);
+          return null;
+        }
+      }
+      function closeHistoryModal() {
+        document.getElementById("history-modal").style.display = "none";
+        document.getElementById("booking-modal").style.display = "none";
+      }
+
+      // Close modal when clicking outside the box
+      function outsideClickClose(event) {
+        const modalBox = document.querySelector(".history-modal-box");
+        if (!modalBox.contains(event.target)) {
+          closeHistoryModal();
+        }
+      }
+    </script>
+  </body>
+</html>

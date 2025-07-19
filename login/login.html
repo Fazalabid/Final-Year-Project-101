@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- FontAwesome for icons (optional) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-papKI+t3tdE8O8Z8zUmU8rNBu9w1ZsBhKuXbD2cGJh8CqMZ8z5IGKZuH0Pl9ovN7B+w2v8xHThjVMe5YO8k6Hg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+  </head>
+  <body>
+    <section class="login-section">
+      <div class="container">
+        <div class="reservation-form-bg">
+          <form
+            id="login-form"
+            action="#"
+            method="POST"
+            class="php-email-form"
+            onsubmit="submitLogin(event)"
+          >
+            <div class="logo-container">
+              <img src="../assets/img/logo.png" alt="Logo" class="logo" />
+            </div>
+
+            <h1 id="login-heading">Login</h1>
+
+            <!-- Email Input -->
+            <div class="input-group">
+              <span class="input-icon"><i class="fa fa-envelope"></i></span>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+              <span class="input-icon"><i class="fa fa-lock"></i></span>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <!-- Show Password Checkbox -->
+            <div class="show-password">
+              <input
+                type="checkbox"
+                id="showPassword"
+                onclick="togglePasswordVisibility()"
+              />
+              <label for="showPassword">Show Password</label>
+            </div>
+
+            <!-- Forgot Password Link -->
+            <div class="forgot-password">
+              <a href="/login/forget-password.html" onclick=""
+                >Forgot Password?</a
+              >
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+
+            <!-- Sign up Redirect -->
+            <div class="forgot-password">
+              <p>Don't have an account?</p>
+              <a href="signUp.html">Sign up</a>
+            </div>
+
+            <div class="order-success-message">Login successful!</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toastify CSS -->
+
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- Your login script -->
+    <script src="login.js"></script>
+
+    <!-- Show Password Function -->
+    <script>
+      function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("password");
+        passwordInput.type =
+          passwordInput.type === "password" ? "text" : "password";
+      }
+
+      function forgotPassword() {
+        Toastify({
+          text: "Password recovery feature coming soon!",
+          duration: 3000,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "#ffc107",
+          close: true,
+        }).showToast();
+      }
+    </script>
+  </body>
+</html>

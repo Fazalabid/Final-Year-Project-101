@@ -1,0 +1,103 @@
+<!-- edit-profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Profile</title>
+    <link
+      rel="stylesheet"
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Edit Profile Info</h2>
+      <form id="editProfileForm">
+        <div class="mb-3">
+          <label>Name</label>
+          <input type="text" class="form-control" id="name" required />
+        </div>
+        <div class="mb-3">
+          <label>Email</label>
+          <input type="email" class="form-control" id="email" required />
+        </div>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="index.html" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+
+    <script>
+      //Function to handle secure fetch requests with token
+      //Automatically logs out user if token is invalid or expired
+      async function secureFetch(url, options = {}) {
+        const token = localStorage.getItem("token");
+
+        // Add Authorization header
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${token}`,
+          "Content-Type":
+            options.body instanceof FormData ? undefined : "application/json",
+        };
+
+        try {
+          const res = await fetch(url, options);
+
+          // Handle expired or invalid token
+          if (res.status === 401 || res.status === 403) {
+            alert("⏰ Session expired. Please log in again.");
+            localStorage.removeItem("token");
+            window.location.href = "../index.html"; // Redirect to login page
+
+            return Promise.reject("Unauthorized");
+          }
+
+          return res;
+        } catch (err) {
+          console.error("Network error:", err);
+          alert("🚨 Network error. Please try again later.");
+          return null;
+        }
+      }
+      const token = localStorage.getItem("token");
+      const userId = JSON.parse(atob(token.split(".")[1])).id;
+
+      window.onload = async () => {
+        const res = await secureFetch(
+          `http://localhost:5000/api/auth/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const user = await res.json();
+        document.getElementById("name").value = user.data.users.name;
+        document.getElementById("email").value = user.data.users.email;
+      };
+
+      document
+        .getElementById("editProfileForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+
+          const res = await secureFetch(
+            `http://localhost:5000/api/auth/updateMe`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ name, email }),
+            }
+          );
+
+          const data = await res.json();
+          if (!res.ok) return alert(data.message || "Failed to update");
+          alert("✅ Profile updated!");
+          window.location.href = "index.html";
+        });
+    </script>
+  </body>
+</html>

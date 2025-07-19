@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BooknBite - Checkout</title>
+    <link
+      href="assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link href="assets/css/main.css" rel="stylesheet" />
+    <!-- Toastify CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+  </head>
+  <body>
+    <header class="bg-light text-white p-3">
+      <div class="container d-flex justify-content-between align-items-center">
+        <a href="index.html" class="d-flex align-items-center">
+          <img
+            src="assets/img/logo.png"
+            alt="Logo"
+            style="height: 70; width: 100px"
+          />
+        </a>
+        <a href="index.html" class="btn btn-outline-dark">Back to Menu</a>
+      </div>
+    </header>
+    <div class="container py-5">
+      <h2 class="text-center mb-4">Checkout</h2>
+      <div class="row">
+        <!-- Left: User Info -->
+
+        <div class="col-md-6">
+          <form id="checkoutForm">
+            <div class="mb-3">
+              <label for="customerName" class="form-label">Your Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="customerName"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Your Email</label>
+              <input type="email" class="form-control" id="email" required />
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Your Phone *</label>
+              <input
+                type="tel"
+                class="form-control"
+                name="phone"
+                id="phone"
+                placeholder="Your Phone"
+                maxlength="11"
+                pattern="\d{11}"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Delivery Address *</label>
+              <input type="text" class="form-control" id="address" required />
+            </div>
+            <div class="mb-3">
+              <label for="splitBetween" class="form-label"
+                >Split Between (People)</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="splitBetween"
+                min="1"
+                max="50"
+                value="1"
+              />
+            </div>
+            <div class="mb-3">
+              <label>Payment Method:</label><br />
+              <input type="radio" name="paymentMethod" value="cash" checked />
+              Cash on Delivery
+              <input type="radio" name="paymentMethod" value="card" /> Card
+            </div>
+
+            <!-- Only show if card is selected -->
+            <div id="card-payment-section" style="display: none">
+              <label>Card Details</label>
+              <div id="card-element" class="form-control"></div>
+              <div id="card-errors" class="text-danger mt-2"></div>
+            </div>
+
+            <button id="placeOrderBtn" class="btn btn-success w-100">
+              Place Order
+            </button>
+            <div id="orderStatusMessage" class="mt-3"></div>
+          </form>
+        </div>
+
+        <!-- Right: Cart Summary -->
+        <div class="col-md-6">
+          <h4>Cart Summary</h4>
+          <ul id="cartSummary" class="list-group mb-3"></ul>
+          <p><strong>Subtotal:</strong> Rs <span id="subtotal">0</span></p>
+          <p><strong>Tax (10%):</strong> Rs <span id="tax">0</span></p>
+          <p><strong>Total:</strong> Rs <span id="total">0</span></p>
+          <p><strong>Per Person:</strong> Rs <span id="perPerson">0</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Processing Spinner Modal -->
+    <div id="orderModal" class="order-modal">
+      <div class="order-modal-content">
+        <div class="spinner"></div>
+        <img
+          src="/assets//img//logo.png"
+          alt="BooknBite"
+          style="width: 200px; margin-bottom: 10px"
+        />
+        <p>Placing your order... Please wait</p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Toastify JS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="assets/js/checkout.js"></script>
+  </body>
+</html>
