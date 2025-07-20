@@ -1,4 +1,5 @@
 const Booking = require("../models/bookingModel");
+const Table = require("../models/tableModel");
 const sendEmail = require("../config/email");
 const PDFDocument = require("pdfkit");
 const path = require("path");
@@ -37,20 +38,66 @@ exports.createBooking = async (req, res) => {
       reservationEnd: endTime,
       user: req.user._id,
     });
+    const tableData = await Table.findById(table);
 
-    const message = `
-      <h3>Hi ${name},</h3>
-      <p>Your table has been successfully booked at BooknBite!</p>
-      <p><strong>Date:</strong> ${new Date(date).toLocaleDateString()}<br>
-      <strong>Time:</strong> ${time}<br>
-      <strong>Guests:</strong> ${guests}</p>
-    `;
+    const html = `
+    <h3>Hi ${name},</h3>
+    <p>Your table has been successfully booked at <strong>BooknBite</strong>!</p>
+    <p>Here are your booking details:</p>
+  
+    <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; font-family: Arial, sans-serif;">
+      <tr style="background-color: #f2f2f2;">
+        <th>Field</th>
+        <th>Details</th>
+      </tr>
+      <tr>
+        <td><strong>Name</strong></td>
+        <td>${name}</td>
+      </tr>
+      <tr>
+        <td><strong>Email</strong></td>
+        <td>${email}</td>
+      </tr>
+      <tr>
+        <td><strong>Phone</strong></td>
+        <td>${phone}</td>
+      </tr>
+      <tr>
+        <td><strong>Guests</strong></td>
+        <td>${guests}</td>
+      </tr>
+      <tr>
+        <td><strong>Date</strong></td>
+        <td>${new Date(date).toLocaleDateString()}</td>
+      </tr>
+      <tr>
+        <td><strong>Time</strong></td>
+        <td>${time}</td>
+      </tr>
+      <tr>
+        <td><strong>Start Time</strong></td>
+        <td>${new Date(startTime).toLocaleTimeString()}</td>
+      </tr>
+      <tr>
+        <td><strong>End Time</strong></td>
+        <td>${new Date(endTime).toLocaleTimeString()}</td>
+      </tr>
+      <tr>
+        <td><strong>Table No.</strong></td>
+        <td>${tableData?.tableNumber}</td>
+      </tr>
+      <tr>
+        <td><strong>Special Request</strong></td>
+        <td>${specialRequest || "N/A"}</td>
+      </tr>
+    </table>
+  
+    <p style="margin-top: 20px;">We look forward to serving you!</p>
+    <p>— The BooknBite Team</p>
+  `;
+
     try {
-      await sendEmail({
-        email,
-        subject: "Your Table Booking Confirmation",
-        message,
-      });
+      await sendEmail(email, "Your Table Booking Confirmation", html);
     } catch (error) {
       console.error("Booking confirmation email failed:", error);
     }

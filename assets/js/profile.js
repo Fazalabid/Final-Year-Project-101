@@ -15,29 +15,31 @@ async function secureFetch(url, options = {}) {
     const res = await fetch(url, options);
 
     // Handle expired or invalid token
-    if (res.status === 401 || res.status === 403) {
-      Toastify({
-        text: "Session Expired, Please log in again.",
-        duration: 3000,
-        gravity: "top", // or "bottom"
-        position: "center", // or "left", "center"
-        backgroundColor: "#dc3545", // Bootstrap danger red
-        stopOnFocus: true,
-      }).showToast();
-      localStorage.removeItem("token");
-      // window.location.href = "../index.html"; // Redirect to login page
+    if (token) {
+      if (res.status === 401 || res.status === 403) {
+        Toastify({
+          text: "Session Expired, Please log in again.",
+          duration: 3000,
+          gravity: "top", // or "bottom"
+          position: "center", // or "left", "center"
+          backgroundColor: "#dc3545", // Bootstrap danger red
+          stopOnFocus: true,
+        }).showToast();
+        localStorage.removeItem("token");
+        // window.location.href = "../index.html"; // Redirect to login page
 
-      return Promise.reject("Unauthorized");
+        return Promise.reject("Unauthorized");
+      }
     }
 
     return res;
   } catch (err) {
     console.error("Network error:", err);
     Toastify({
-      text: "Session Expired, Please log in again.",
+      text: "Server Error, Something went wrong",
       duration: 3000,
       gravity: "top", // or "bottom"
-      position: "right", // or "left", "center"
+      position: "center", // or "left", "center"
       backgroundColor: "#dc3545", // Bootstrap danger red
       stopOnFocus: true,
     }).showToast();

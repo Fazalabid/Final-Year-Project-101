@@ -50,13 +50,23 @@ async function secureFetch(url, options = {}) {
         text: "Session Expired, Please log in again.",
         duration: 3000,
         gravity: "top",
-        position: "right",
+        position: "center",
         backgroundColor: "#dc3545",
         stopOnFocus: true,
       }).showToast();
       localStorage.removeItem("token");
       window.location.href = "../index.html";
       return Promise.reject("Unauthorized");
+    }
+    if (res.status === 500 || res.status === 400 || res.status === 503) {
+      Toastify({
+        text: "Server Error, Try again later",
+        duration: 3000,
+        gravity: "top", // or "bottom"
+        position: "center", // or "left", "center"
+        backgroundColor: "#dc3545", // Bootstrap danger red
+        stopOnFocus: true,
+      }).showToast();
     }
 
     return res;
@@ -245,8 +255,10 @@ document
       localStorage.removeItem("cart");
       cart = [];
       renderCartSummary();
-      showToast("✅ Order placed successfully!", "success");
-      window.location.href = "index.html";
+      showToast("✅ Order placed successfully! Check your email.", "success");
+      setTimeout(() => {
+        window.location.href = "index.html"; // or any route
+      }, 2000);
     } catch (err) {
       showToast(
         `🚨 Error placing order: ${err.message || "Try again later"}`,

@@ -20,7 +20,7 @@ async function secureFetch(url, options = {}) {
         text: "Session Expired, Please log in again.",
         duration: 3000,
         gravity: "top", // or "bottom"
-        position: "right", // or "left", "center"
+        position: "center", // or "left", "center"
         backgroundColor: "#dc3545", // Bootstrap danger red
         stopOnFocus: true,
       }).showToast();
@@ -28,6 +28,16 @@ async function secureFetch(url, options = {}) {
       window.location.href = "../index.html"; // Redirect to login page
 
       return Promise.reject("Unauthorized");
+    }
+    if (res.status === 500 || res.status === 400 || res.status === 503) {
+      Toastify({
+        text: "Server Error, Try again later",
+        duration: 3000,
+        gravity: "top", // or "bottom"
+        position: "center", // or "left", "center"
+        backgroundColor: "#dc3545", // Bootstrap danger red
+        stopOnFocus: true,
+      }).showToast();
     }
 
     return res;

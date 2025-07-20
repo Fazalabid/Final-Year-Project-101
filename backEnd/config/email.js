@@ -1,22 +1,23 @@
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
+require("dotenv").config();
 
-const sendEmail = async (options) => {
-  // Looking to send emails in production? Check out our Email API/SMTP product!
-  var transporter = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
-    },
-  });
-  const mailOptions = {
-    from: '"BooknBite Support" <support@booknbite.com>',
-    to: options.email,
-    subject: options.subject,
-    html: options.message,
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const sendEmail = async (to, subject, html) => {
+  const msg = {
+    to,
+    from: "booknbite4@gmail.com",
+    subject,
+    html,
   };
-  await transporter.sendMail(mailOptions);
+
+  try {
+    await sgMail.send(msg);
+    console.log(`Email sent to ${to}`);
+  } catch (err) {
+    console.error("SendGrid Error:", err.response?.body || err);
+    throw new Error("Email failed to send");
+  }
 };
 
 module.exports = sendEmail;

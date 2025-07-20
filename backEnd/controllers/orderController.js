@@ -185,40 +185,96 @@ exports.placeOrder = async (req, res) => {
       "items.menuItem",
       "title price"
     );
-    const message = `
-  <h3>Hi ${req.user.name},</h3>
-  <p>Thank you for your order with BooknBite!</p>
-  <p><strong>Order ID:</strong> ${order._id}</p>
-  <p><strong>Customer Name:</strong> ${order.customerName}</p>
-  <p><strong>Email:</strong> ${order.email}</p>
-  <p><strong>Phone:</strong> ${order.phone}</p>
-  <p><strong>Address:</strong> ${order.address}</p>
-  <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
-  <p><strong>Order Summary:</strong></p>
-  <ul>
-    ${populatedOrder.items
-      .map(
-        (item) =>
-          `<li>${item.menuItem.title} - ${item.quantity}x (Rs. ${
-            item.menuItem.price * item.quantity
-          })</li>`
-      )
-      .join("")}
-  </ul>
-  <p><strong>Split Between: ${order.splitBetween}</strong></p>
-  <p><strong>Tax (10%): Rs. ${order.tax}</strong></p>
-  <p><strong>Subtotal: Rs. ${order.totalPrice - order.tax}</strong></p>
-  <p><strong>Total: Rs. ${order.totalPrice}</strong></p>
-  <p><strong>Per Person Amount: Rs. ${order.perPersonAmount}</strong></p>
-  <p>We'll get your food ready shortly. 🍽️</p>
-`;
+    const html = `
+    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto;">
+      <h2 style="color: #d32f2f;">Hi ${req.user.name},</h2>
+      <p>Thank you for your order with <strong>BooknBite</strong>! Here are your order details:</p>
+  
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Order ID:</td>
+          <td style="padding: 8px;">${order._id}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Customer Name:</td>
+          <td style="padding: 8px;">${order.customerName}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Email:</td>
+          <td style="padding: 8px;">${order.email}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Phone:</td>
+          <td style="padding: 8px;">${order.phone}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Address:</td>
+          <td style="padding: 8px;">${order.address}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Payment Method:</td>
+          <td style="padding: 8px;">${order.paymentMethod}</td>
+        </tr>
+      </table>
+  
+      <h3 style="margin-top: 30px;">Order Summary:</h3>
+      <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+        <thead>
+          <tr style="background-color: #f5f5f5;">
+            <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Item</th>
+            <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Quantity</th>
+            <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Price (Rs.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${populatedOrder.items
+            .map(
+              (item) => `
+                <tr>
+                  <td style="padding: 10px; border: 1px solid #ddd;">${
+                    item.menuItem.title
+                  }</td>
+                  <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${
+                    item.quantity
+                  }</td>
+                  <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">${
+                    item.menuItem.price * item.quantity
+                  }</td>
+                </tr>`
+            )
+            .join("")}
+        </tbody>
+      </table>
+  
+      <table style="width: 100%; margin-top: 20px;">
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Split Between:</td>
+          <td style="padding: 8px;">${order.splitBetween}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Tax (10%):</td>
+          <td style="padding: 8px;">Rs. ${order.tax}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Subtotal:</td>
+          <td style="padding: 8px;">Rs. ${order.totalPrice - order.tax}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Total:</td>
+          <td style="padding: 8px;">Rs. ${order.totalPrice}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px; font-weight: bold;">Per Person Amount:</td>
+          <td style="padding: 8px;">Rs. ${order.perPersonAmount}</td>
+        </tr>
+      </table>
+  
+      <p style="margin-top: 30px;">We'll get your food ready shortly. 🍽️<br>Thanks again for choosing <strong>BooknBite</strong>!</p>
+    </div>
+  `;
 
     try {
-      await sendEmail({
-        email: req.user.email,
-        subject: "Your BooknBite Order Confirmation",
-        message,
-      });
+      await sendEmail(email, "Your BooknBite Order Confirmation", html);
     } catch (error) {
       console.error("Order email failed:", error);
     }

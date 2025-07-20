@@ -164,18 +164,14 @@ exports.forgotPassword = async (req, res) => {
   // console.log("Hashed token:", hash);
   const resetURL = `http://127.0.0.1:5500/login/reset-password.html?token=${resetToken}`;
 
-  const message = `
+  const html = `
     <p>You requested a password reset for BooknBite.</p>
     <p><a href="${resetURL}">Click here to reset your password</a></p>
     <p>This link will expire in 15 minutes.</p>
   `;
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: "BooknBite Password Reset",
-      message,
-    });
+    await sendEmail(user.email, "BooknBite Password Reset", html);
     res.json({ msg: "Reset link sent to email" });
   } catch (err) {
     user.resetPasswordToken = undefined;

@@ -30,6 +30,16 @@ async function secureFetch(url, options = {}) {
 
       return null;
     }
+    if (res.status === 500 || res.status === 400 || res.status === 503) {
+      Toastify({
+        text: "Server Error, Try again later",
+        duration: 3000,
+        gravity: "top", // or "bottom"
+        position: "center", // or "left", "center"
+        backgroundColor: "#dc3545", // Bootstrap danger red
+        stopOnFocus: true,
+      }).showToast();
+    }
 
     return res;
   } catch (err) {
